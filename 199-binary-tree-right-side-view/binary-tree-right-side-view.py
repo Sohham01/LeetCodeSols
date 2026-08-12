@@ -7,16 +7,12 @@
 class Solution:
     def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
         res=[]
-        q=deque()
-        q.append(root)
-        while q:
-            r=None
-            for i in range(len(q)):
-                node=q.popleft()
-                if node:
-                    r=node
-                    q.append(node.left)
-                    q.append(node.right)
-            if r:
-                res.append(r.val)
+        def dfs(node,depth):
+            if not node:
+                return
+            if depth==len(res):
+                res.append(node.val)
+            dfs(node.right,depth+1)
+            dfs(node.left,depth+1)
+        dfs(root,0)
         return res
