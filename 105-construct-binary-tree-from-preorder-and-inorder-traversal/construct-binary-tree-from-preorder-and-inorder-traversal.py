@@ -6,12 +6,16 @@
 #         self.right = right
 class Solution:
     def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
-        preorder=deque(preorder)
-        def build(preorder,inorder):
-            if inorder:
-                i=inorder.index(preorder.popleft())
-                root=TreeNode(inorder[i])
-                root.left=build(preorder,inorder[:i])
-                root.right=build(preorder,inorder[i+1:])
-                return root
-        return build(preorder,inorder)
+        mapping={}
+        for i in range(len(inorder)):
+            mapping[inorder[i]]=i
+        preorder=collections.deque(preorder)
+        def build(i,j):
+            if i>j:
+                return None
+            root= TreeNode(preorder.popleft())
+            mid=mapping[root.val]
+            root.left=build(i,mid-1)
+            root.right=build(mid+1,j)
+            return root
+        return build(0,len(preorder)-1)
