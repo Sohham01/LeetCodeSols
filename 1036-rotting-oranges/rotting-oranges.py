@@ -1,8 +1,8 @@
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        rows,cols=len(grid),len(grid[0])
-        if rows==0:
+        if not grid or not grid[0]:
             return -1
+        rows,cols=len(grid),len(grid[0])
         cnt=0
         rotten=deque()
         for r in range(rows):
